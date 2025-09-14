@@ -117,7 +117,7 @@ async function startServer() {
     // Start scheduled jobs
     startMessageCleanupJob();
     
-    server.listen(PORT, () => {
+    server.listen(Number(PORT), '0.0.0.0', () => {
       console.log(`🚀 Whisper Walls API server running on port ${PORT}`);
       console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`🔗 Health check: http://localhost:${PORT}/health`);

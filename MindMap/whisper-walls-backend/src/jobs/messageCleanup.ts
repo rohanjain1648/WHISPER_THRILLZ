@@ -16,7 +16,6 @@ export function startMessageCleanupJob() {
       console.error('❌ Error during message cleanup:', error);
     }
   }, {
-    scheduled: true,
     timezone: 'UTC'
   });
 
