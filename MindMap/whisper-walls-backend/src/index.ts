@@ -44,6 +44,11 @@ app.use(morgan('combined'));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from frontend build (production only)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('../whisper-walls-frontend/dist'));
+}
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({

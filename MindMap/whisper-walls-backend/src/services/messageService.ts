@@ -2,7 +2,7 @@ import { Message, IMessage, MessageReaction } from '../models/Message';
 import { moodAnalysisService } from './moodAnalysisService';
 import { contentModerationService } from './contentModerationService';
 import { MoodEmbedding } from '../types/mood';
-import mongoose from 'mongoose';
+import mongoose, { type PipelineStage } from 'mongoose';
 
 export interface CreateMessageRequest {
   content: string;
@@ -119,7 +119,7 @@ export class MessageService {
       const savedMessage = await message.save();
       
       // Trigger content moderation in background
-      this.moderateMessageInBackground(savedMessage._id.toString());
+      this.moderateMessageInBackground(savedMessage.id);
 
       return savedMessage;
     } catch (error) {
@@ -285,12 +285,12 @@ export class MessageService {
    */
   async getLocationStats(latitude: number, longitude: number, radiusInMeters: number = 1000) {
     try {
-      const pipeline = [
+      const pipeline: PipelineStage[] = [
         {
           $geoNear: {
             near: {
               type: 'Point',
-              coordinates: [longitude, latitude]
+              coordinates: [longitude, latitude] as [number, number]
             },
             distanceField: 'distance',
             maxDistance: radiusInMeters,

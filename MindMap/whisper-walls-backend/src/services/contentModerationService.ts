@@ -58,7 +58,7 @@ export interface ModerationQueue {
 }
 
 export class ContentModerationService {
-  private openai: OpenAI;
+  private openai?: OpenAI;
   private rateLimitMap: Map<string, { count: number; resetTime: number }> = new Map();
 
   constructor() {

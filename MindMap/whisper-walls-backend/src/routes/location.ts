@@ -73,7 +73,7 @@ const handleValidationErrors = (req: express.Request, res: express.Response, nex
     };
     return res.status(400).json(response);
   }
-  next();
+  return next();
 };
 
 /**

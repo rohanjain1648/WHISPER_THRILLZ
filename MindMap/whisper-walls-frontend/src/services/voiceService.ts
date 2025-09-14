@@ -1,4 +1,4 @@
-import { api } from './api';
+import { apiService as api } from './api';
 import type { ApiResponse, MoodEmbedding } from '../types';
 
 export interface VoiceSettings {
