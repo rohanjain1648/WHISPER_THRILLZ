@@ -93,8 +93,7 @@ const generateMockCoupleMood = (user1Name: string, user2Name: string): BlendedMo
     sentiment: (user1Mood.sentiment + user2Mood.sentiment) / 2,
     intensity: (user1Mood.intensity + user2Mood.intensity) / 2,
     timestamp: new Date()
-  };  // Calcula
-te compatibility score
+  };  // Calculate compatibility score
   const compatibility = calculateCompatibility(user1Mood, user2Mood);
 
   // Find dominant emotions in blended mood

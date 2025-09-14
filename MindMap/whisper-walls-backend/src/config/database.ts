@@ -2,7 +2,13 @@ import mongoose from 'mongoose';
 
 export const connectDatabase = async (): Promise<void> => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/whisper-walls';
+    // Check if MongoDB URI is provided
+    const mongoUri = process.env.MONGODB_URI;
+    
+    if (!mongoUri) {
+      console.log('⚠️ No MongoDB URI provided. Running in development mode without database.');
+      return;
+    }
     
     await mongoose.connect(mongoUri, {
       dbName: process.env.MONGODB_DB_NAME || 'whisper-walls',
@@ -21,14 +27,16 @@ export const connectDatabase = async (): Promise<void> => {
     
     // Graceful shutdown
     process.on('SIGINT', async () => {
-      await mongoose.connection.close();
-      console.log('🔌 MongoDB connection closed through app termination');
+      if (mongoose.connection.readyState === 1) {
+        await mongoose.connection.close();
+        console.log('🔌 MongoDB connection closed through app termination');
+      }
       process.exit(0);
     });
     
   } catch (error) {
     console.error('❌ Failed to connect to MongoDB:', error);
-    throw error;
+    console.log('⚠️ Continuing without database connection...');
   }
 };
 
