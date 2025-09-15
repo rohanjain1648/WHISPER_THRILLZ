@@ -1,5 +1,0 @@
-{
-    "typescript.autoClosingTags": false,
-    "kiroAgent.configureMCP": "Disabled",
-    "terminal.integrated.sendKeybindingsToShell": true
-}
